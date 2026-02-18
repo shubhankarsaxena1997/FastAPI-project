@@ -1,16 +1,19 @@
-import uvicorn
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+
+# load .env file to environment
+load_dotenv()
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-conn = MongoClient('mongodb+srv://shubhankarsaxena10:g3OFWoqgMmLdHDLb@cluster0.ndky7.mongodb.net')
+conn = MongoClient(os.getenv("connectionString"))
 
 # @app.get("/", response_class=HTMLResponse)
 # async def read_item(request: Request):
