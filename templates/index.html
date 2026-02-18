@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Navbar Example</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#">iNotes</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+
+            <!-- Search box inside the navbar -->
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Search...">
+                <button id="search-btn">Search</button>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- Form Section -->
+    <div class="form-container">
+
+        <h2>Start adding your notes to the database</h2>
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label for="title"> Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="desc">Description:</label>
+                <textarea id="desc" name="desc" rows="4" required></textarea>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" name="important" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Important Note</label>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="form-response"></div>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+
+            {% if success %}
+            <p style="color: green;">{{ success }}</p>
+        {% endif %}
+    </div>
+
+
+    <!-- Notes Section -->
+    <div class="notes-container">
+        <h2>Notes</h2>
+        <ul id="notes-list">
+            {% if newDoc is defined %}
+                No notes to display..
+            {% endif %}
+            {% for item in newDoc %}
+                <li>
+                    {{ item.title }} - {{ item.desc }} - {{ item.important }}
+                    <form action="/" method="delete">
+                        <button>Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
